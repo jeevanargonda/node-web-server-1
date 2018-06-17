@@ -4,6 +4,8 @@ let hbs = require('hbs');
 //Express is a function and it will return Object so you need to assign to a let or variable to run app
 let app = express();
 
+const port = process.env.PORT || 3000;
+
 //To use Partials we need to handle hbs.expressPartials method
 hbs.registerPartials(__dirname + '/views/partials');
 hbs.registerHelper('getYear',()=>{
@@ -16,7 +18,7 @@ app.use(express.static(__dirname + '/public'));
 //To tell express that by using middleware we need to more than what express cannt do
 
 app.use((req,res,next) => {
-  fs.appendFileSync('index.log',`Time stamp: ${new Date().toString()} :: ${req.method} \ ${req.path} ` +'\n')
+  fs.appendFileSync('index.log',`Time stamp: ${new Date().toString()} :: ${req.method} \ ${req.path} `+ '\n')
   console.log(`Time stamp: ${new Date().toString()}`);
   next();
 })
@@ -38,6 +40,6 @@ app.get('/contact',(req,res) => {
   })
 });
 
-app.listen(3000, () => {
-  console.log('Server opened for 3000');
+app.listen(port, () => {
+  console.log(`Server opened for ${port}`);
 });// It will listen the port number where we r using on browser and connect to the application
